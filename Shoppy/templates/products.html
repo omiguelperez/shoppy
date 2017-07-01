@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Shoppy</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 	<h1>Products</h1>
 	<ul>
 		{% for product in products %}
-			<li>{{ product.name }} - {{ product.price }}</li>
+			<li>
+				<p>{{ product.name }} - {{ product.price }}</p>
+				<img src="{{ product.image.url }}">
+			</li>
 		{% endfor %}
 	</ul>
-</body>
-</html>
+{% endblock %}

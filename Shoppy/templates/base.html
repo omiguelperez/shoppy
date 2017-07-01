@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}Shoppy{% endblock %}</title>
+
+	{% load staticfiles %}
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">	
+	{% block styles %}{% endblock %}
+</head>
+<body>
+	{% block content %}{% endblock %}
+	
+	{% block scripts %}{% endblock %}
+</body>
+</html>
