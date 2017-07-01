@@ -1,5 +1,7 @@
 from django.db import models
 
+from customers.models import Customer
+
 
 class Product(models.Model):
     name = models.CharField(max_length=140)
@@ -10,3 +12,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Favorite(models.Model):
+	product = models.ForeignKey(Product)
+	customer = models.ForeignKey(Customer)
