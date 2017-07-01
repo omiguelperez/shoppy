@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import loader
 
 from .models import Product
@@ -14,7 +14,10 @@ def products(request):
 
 
 def product_detail(request, product_id):
-    product = Product.objects.get(pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        raise Http404
     title = product.name
     template = loader.get_template('product_detail.html')
     context = {
