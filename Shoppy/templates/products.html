@@ -5,7 +5,7 @@
 	<ul>
 		{% for product in products %}
 			<li>
-				<p>{{ product.name }} - {{ product.price }}</p>
+				<p>{{ product.name }} - {{ product.price }} | <em>{{ product.description }}</em></p>
 				<img src="{{ product.image.url }}">
 			</li>
 		{% endfor %}
