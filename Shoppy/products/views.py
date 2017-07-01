@@ -1,25 +1,18 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from django.template import loader
+from django.shortcuts import get_object_or_404, render
 
 from .models import Product
 
 
 def products(request):
     products = Product.objects.order_by('price')
-    template = loader.get_template('products.html')
-    context = {
-        'products': products
-    }
-    return HttpResponse(template.render(context, request))
+    context = {'products': products}
+    return render(request, 'products.html', context)
 
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    title = product.name
-    template = loader.get_template('product_detail.html')
     context = {
-        'title': title,
+        'title': product.name,
         'product': product
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'product_detail.html', context)
