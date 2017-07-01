@@ -27,7 +27,8 @@ def product_new(request):
         if form.is_valid():
             product = form.save(commit=False)
             product.save()
-            return HttpResponseRedirect(reverse('product_detail', kwargs={'product_id': product.pk}))
+            return HttpResponseRedirect(
+                reverse('product_detail', kwargs={'product_id': product.pk}))
     context = {
         'title': 'New product',
         'form': form
