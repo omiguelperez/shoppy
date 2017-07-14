@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
@@ -18,6 +19,7 @@ class ProductDetail(DetailView):
     model = Product
 
 
+@login_required(login_url='/auth-login/')
 def product_new(request):
     form = ProductForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
