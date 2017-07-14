@@ -15,5 +15,5 @@ class Product(models.Model):
 
 
 class Favorite(models.Model):
-	product = models.ForeignKey(Product)
-	customer = models.ForeignKey(Customer)
+    product = models.ForeignKey(Product)
+    customer = models.ForeignKey(Customer)
