@@ -1,24 +1,19 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
 from .forms import ProductForm
 from .models import Product
 
 
-def products(request):
-    products = Product.objects.order_by('price')
-    context = {'products': products}
-    return render(request, 'products.html', context)
+class ProductList(ListView):
+    model = Product
 
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    context = {
-        'title': product.name,
-        'product': product
-    }
-    return render(request, 'product_detail.html', context)
+class ProductDetail(DetailView):
+    model = Product
 
 
 def product_new(request):
@@ -28,7 +23,7 @@ def product_new(request):
             product = form.save(commit=False)
             product.save()
             return HttpResponseRedirect(
-                reverse('product_detail', kwargs={'product_id': product.pk}))
+                reverse('products:detail', kwargs={'pk': product.pk}))
     context = {
         'title': 'New product',
         'form': form
