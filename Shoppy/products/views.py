@@ -1,5 +1,7 @@
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -29,3 +31,20 @@ def product_new(request):
         'form': form
     }
     return render(request, 'product_new.html', context)
+
+
+def auth_login(request):
+    if request.method == 'POST':
+        action = request.POST.get('action', None)
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        if action == 'signup':
+            user = User.objects.create_user(username=username, password=password)
+            login(request, user)
+        elif action == 'login':
+            user = authenticate(username=username, password=password)
+            if not user:
+                return redirect('/auth-login/')
+            login(request, user)
+        return redirect('/')
+    return render(request, 'login/login.html', {})
