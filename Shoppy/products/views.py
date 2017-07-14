@@ -8,6 +8,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from .forms import ProductForm
+from .mixins import LoginRequiredMixin
 from .models import Product
 
 
@@ -15,7 +16,7 @@ class ProductList(ListView):
     model = Product
 
 
-class ProductDetail(DetailView):
+class ProductDetail(LoginRequiredMixin, DetailView):
     model = Product
 
 
@@ -41,7 +42,8 @@ def auth_login(request):
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
         if action == 'signup':
-            user = User.objects.create_user(username=username, password=password)
+            user = User.objects.create_user(
+                username=username, password=password)
             login(request, user)
         elif action == 'login':
             user = authenticate(username=username, password=password)
